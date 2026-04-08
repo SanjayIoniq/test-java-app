@@ -1,19 +1,40 @@
 package com.demo;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class App {
-    public static void main(String[] args) throws Exception {
 
-        double basePrice = 1000;
-        double tax = basePrice * 0.18;
-        double discount = basePrice * 0.05;
+    private static Set<String> votedUsers = new HashSet<>();
 
-        double finalPrice = basePrice + tax - discount;
+    public static void main(String[] args) {
 
-        System.out.println("Final Price: " + finalPrice);
+        System.out.println("Voting System Started...");
 
-        // Keep container running (IMPORTANT for Kubernetes)
         while (true) {
-            Thread.sleep(10000);
+            try {
+
+                vote("user1");
+                vote("user2");
+                vote("user1"); 
+                System.out.println("Total Votes Counted: " + votedUsers.size());
+
+                // wait 5 seconds
+                Thread.sleep(5000);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void vote(String userId) {
+
+        if (votedUsers.contains(userId)) {
+            System.out.println("Duplicate vote rejected for: " + userId);
+        } else {
+            votedUsers.add(userId);
+            System.out.println("Vote accepted for: " + userId);
         }
     }
 }
