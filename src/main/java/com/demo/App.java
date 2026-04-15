@@ -1,40 +1,25 @@
 package com.demo;
-
-import java.util.HashSet;
-import java.util.Set;
-
 public class App {
-
-    private static Set<String> votedUsers = new HashSet<>();
-
     public static void main(String[] args) {
-
-        System.out.println("Voting System Started...");
-
-        while (true) {
+        int units = 120;
+        double bill = calculateBill(units);
+        System.out.println("Units: " + units);
+        System.out.println("Total Bill: " + bill);
+        while(true){
             try {
-
-                vote("user1");
-                vote("user2");
-                vote("user1"); 
-                System.out.println("Total Votes Counted: " + votedUsers.size());
-
-                // wait 5 seconds
-                Thread.sleep(5000);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                Thread.sleep(10000);
+            } catch(Exception e){}
         }
     }
-
-    public static void vote(String userId) {
-
-        if (votedUsers.contains(userId)) {
-            System.out.println("Duplicate vote rejected for: " + userId);
+    public static double calculateBill(int units) {
+        double bill = 0;
+        if (units <= 100) {
+            bill = units * 1.5;
+        } else if (units <= 200) {
+            bill = (100 * 1.5) + ((units - 100) * 2.5);
         } else {
-            votedUsers.add(userId);
-            System.out.println("Vote accepted for: " + userId);
+            bill = (100 * 1.5) + (100 * 2.5) + ((units - 200) * 4);
         }
+        return bill;
     }
 }
